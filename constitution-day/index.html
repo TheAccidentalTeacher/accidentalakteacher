@@ -18,12 +18,13 @@
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=IM+Fell+English:ital@0;1&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,700;1,7..72,400;1,7..72,700&display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=mtkvjchx">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Archivo+Black&amp;family=IM+Fell+English:ital@0;1&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,700;1,7..72,400;1,7..72,700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&amp;display=swap">
+<link rel="stylesheet" href="/assets/site.css?v=20df052119">
 </head>
-<body><div class="frame"><header class="top">
+<body class="theme-broadside"><div class="frame"><header class="top">
   <a class="brand" href="/">The Accidental Teacher</a>
-  <nav>
+  <nav aria-label="Main navigation">
+    <a href="/wren-and-sitka">Wren and Sitka</a>
     <a href="/constitution-day" aria-current="page">Constitution Day</a>
     <a href="https://nextchapterhomeschool.com">The store</a>
     <a href="https://nextchapterhomeschool.com/blogs/one-size-fits-one">The blog</a>
@@ -284,6 +285,7 @@
 (function () {
   var API = "https://next-chapter-homeschool.vercel.app/api/leads";
   var FALLBACK = "https://nextchapterhomeschool.com/pages/subscribe";
+  var SOURCE = "constitution-day";
   var T = {"working":"One second.","done":"You are on the list. The welcome email is on its way.","badEmail":"That does not look like an email address. Check it and try again.","failed":"That did not go through. Try again in a minute, or","failedLink":"sign up on the store instead."};
   var f = document.getElementById("list-form");
   var m = document.getElementById("list-msg");
@@ -292,26 +294,43 @@
     b.disabled = false;
     m.textContent = "";
     m.appendChild(document.createTextNode(T.failed + " "));
-    var a = document.createElement("a"); a.href = FALLBACK; a.textContent = T.failedLink; m.appendChild(a);
+    var a = document.createElement("a");
+    a.href = FALLBACK;
+    a.textContent = T.failedLink;
+    m.appendChild(a);
   }
-  f.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var email = f.email.value.trim(), first = f.first_name.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { m.textContent = T.badEmail; f.email.focus(); return; }
-    b.disabled = true; m.textContent = T.working;
+  f.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var email = f.elements.email.value.trim();
+    var first = f.elements.first_name.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      m.textContent = T.badEmail;
+      f.elements.email.focus();
+      return;
+    }
+    b.disabled = true;
+    m.textContent = T.working;
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, first_name: first, source: "constitution-day", "bot-field": f["bot-field"].value, page: location.href })
-    }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
-      .then(function (j) { if (j && j.ok) { f.hidden = true; m.textContent = T.done; } else { fail(); } })
-      .catch(fail);
+      body: JSON.stringify({ email: email, first_name: first, source: SOURCE, "bot-field": f.elements["bot-field"].value, page: location.href })
+    }).then(function (response) {
+      return response.json().catch(function () { return { ok: false }; });
+    }).then(function (result) {
+      if (result && result.ok) {
+        f.hidden = true;
+        m.textContent = T.done;
+      } else {
+        fail();
+      }
+    }).catch(fail);
   });
 })();</script>
 <div class="frame"><footer>
   <div>&copy; 2026 Scott Somers &middot; Next Chapter Homeschool</div>
-  <nav>
+  <nav aria-label="Footer navigation">
     <a href="/">Home</a>
+    <a href="/wren-and-sitka">Wren and Sitka</a>
     <a href="/constitution-day">Constitution Day</a>
     <a href="https://nextchapterhomeschool.com">Next Chapter Homeschool</a>
     <a href="https://nextchapterhomeschool.com/blogs/one-size-fits-one">One Size Fits One</a>
