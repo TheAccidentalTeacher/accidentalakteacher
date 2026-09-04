@@ -10,7 +10,7 @@
 <meta property="og:title" content="The Accidental Teacher | Scott Somers, Glennallen, Alaska">
 <meta property="og:description" content="Scott Somers. Former middle school teacher in Glennallen, Alaska, homeschool dad and coach. The things I make get their permanent address here.">
 <meta property="og:url" content="https://accidentalakteacher.com/">
-<meta property="og:image" content="https://accidentalakteacher.com/assets/og.jpg">
+<meta property="og:image" content="https://accidentalakteacher.com/assets/about-og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -19,11 +19,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Archivo+Black&amp;family=IM+Fell+English:ital@0;1&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,700;1,7..72,400;1,7..72,700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&amp;display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=20df052119">
+<link rel="stylesheet" href="/assets/site.css?v=1b913c085e">
 </head>
 <body class="theme-broadside"><div class="frame"><header class="top">
   <a class="brand" href="/">The Accidental Teacher</a>
   <nav aria-label="Main navigation">
+    <a href="/about">About Scott</a>
     <a href="/wren-and-sitka">Wren and Sitka</a>
     <a href="/constitution-day">Constitution Day</a>
     <a href="https://nextchapterhomeschool.com">The store</a>
@@ -38,8 +39,14 @@
       <h1>The Accidental Teacher</h1>
       <p class="deck">Scott Somers. I taught middle school in Glennallen, Alaska. Now I am a homeschool dad and a homeschool coach, and my family runs Next Chapter Homeschool. One size fits one.</p>
       <p class="sub">This site is the permanent address for the things I make. Short list so far. It grows when the next thing is done, not before.</p>
+      <div class="btns">
+        <a class="btn" href="/about">More about Scott</a>
+        <a class="btn ghost" href="mailto:scott@nextchapterhomeschool.com">Email Scott</a>
+      </div>
     </div>
-    <div class="art"><img src="/assets/cover.webp" alt="" width="800" height="800" fetchpriority="high"></div>
+    <div class="art portrait">
+      <img src="/assets/scott.webp" alt="Scott Somers, bearded and bespectacled, in a brown sweater in front of a bookshelf" width="1100" height="1375" fetchpriority="high">
+    </div>
   </section>
   <section class="sec">
     <div class="things">
@@ -93,13 +100,74 @@
       </div>
     </article></div>
   </section>
+  <section class="sec" id="list">
+    <div class="listbox">
+      <h2>One email when something new goes up</h2>
+      <p>The useful stuff goes on the blog, One Size Fits One: what homeschooling actually costs, how to tell whether it is the curriculum or your child, how to choose without drowning. Put your email here and you get one email when a new post goes up, and word when the next thing I make exists. No drip, nothing you did not ask for.</p>
+      <form id="list-form" class="form" method="post" action="https://next-chapter-homeschool.vercel.app/api/leads" novalidate>
+        <input type="hidden" name="source" value="author-site-home">
+        <label class="hp" aria-hidden="true">Leave this empty <input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label>
+        <input type="text" name="first_name" placeholder="First name" autocomplete="given-name" aria-label="First name">
+        <input type="email" name="email" placeholder="Email" autocomplete="email" aria-label="Email" required>
+        <button class="btn" type="submit">Put me on the list</button>
+      </form>
+      <p id="list-msg" class="msg" aria-live="polite"></p>
+    </div>
+  </section>
 </main>
+<script>
+(function () {
+  var API = "https://next-chapter-homeschool.vercel.app/api/leads";
+  var FALLBACK = "https://nextchapterhomeschool.com/pages/subscribe";
+  var SOURCE = "author-site-home";
+  var T = {"working":"One second.","done":"You are on the list. The welcome email is on its way.","badEmail":"That does not look like an email address. Check it and try again.","failed":"That did not go through. Try again in a minute, or","failedLink":"sign up on the store instead."};
+  var f = document.getElementById("list-form");
+  var m = document.getElementById("list-msg");
+  var b = f.querySelector("button");
+  function fail() {
+    b.disabled = false;
+    m.textContent = "";
+    m.appendChild(document.createTextNode(T.failed + " "));
+    var a = document.createElement("a");
+    a.href = FALLBACK;
+    a.textContent = T.failedLink;
+    m.appendChild(a);
+  }
+  f.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var email = f.elements.email.value.trim();
+    var first = f.elements.first_name.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      m.textContent = T.badEmail;
+      f.elements.email.focus();
+      return;
+    }
+    b.disabled = true;
+    m.textContent = T.working;
+    fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, first_name: first, source: SOURCE, "bot-field": f.elements["bot-field"].value, page: location.href })
+    }).then(function (response) {
+      return response.json().catch(function () { return { ok: false }; });
+    }).then(function (result) {
+      if (result && result.ok) {
+        f.hidden = true;
+        m.textContent = T.done;
+      } else {
+        fail();
+      }
+    }).catch(fail);
+  });
+})();</script>
 <div class="frame"><footer>
   <div>&copy; 2026 Scott Somers &middot; Next Chapter Homeschool</div>
   <nav aria-label="Footer navigation">
     <a href="/">Home</a>
+    <a href="/about">About Scott</a>
     <a href="/wren-and-sitka">Wren and Sitka</a>
     <a href="/constitution-day">Constitution Day</a>
+    <a href="mailto:scott@nextchapterhomeschool.com">Email Scott</a>
     <a href="https://nextchapterhomeschool.com">Next Chapter Homeschool</a>
     <a href="https://nextchapterhomeschool.com/blogs/one-size-fits-one">One Size Fits One</a>
     <a href="https://www.teacherspayteachers.com/store/next-chapter-outpost">Next Chapter Outpost</a>

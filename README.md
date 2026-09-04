@@ -5,6 +5,7 @@ product modules, their book spines, and the verified TPT catalog. Do not hand-ed
 here. Change the source in Jumpdrive and rerun the builder.
 
 - `/` is the author-site hub
+- `/about` is the findable page about Scott: biography, the seven interview chairs, and his own email address
 - `/constitution-day` is the Bill of Rights booklet page
 - `/wren-and-sitka` is the 25-investigation field notebook page
 - `/assets` holds compact raster derivatives from both product families
