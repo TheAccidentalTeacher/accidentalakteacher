@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Archivo+Black&amp;family=IM+Fell+English:ital@0;1&amp;family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,700;1,7..72,400;1,7..72,700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&amp;display=swap">
-<link rel="stylesheet" href="/assets/site.css?v=1b913c085e">
+<link rel="stylesheet" href="/assets/site.css?v=a391508e13">
 </head>
 <body class="theme-broadside"><div class="frame"><header class="top">
   <a class="brand" href="/">The Accidental Teacher</a>
@@ -40,8 +40,8 @@
       <p class="deck">Scott Somers. I taught middle school in Glennallen, Alaska. Now I am a homeschool dad and a homeschool coach, and my family runs Next Chapter Homeschool. One size fits one.</p>
       <p class="sub">This site is the permanent address for the things I make. Short list so far. It grows when the next thing is done, not before.</p>
       <div class="btns">
-        <a class="btn" href="/about">More about Scott</a>
-        <a class="btn ghost" href="mailto:scott@nextchapterhomeschool.com">Email Scott</a>
+        <a class="btn" href="https://nextchapterhomeschool.com?utm_source=author-site&amp;utm_medium=referral&amp;utm_campaign=home&amp;utm_content=hero-shop">Shop Next Chapter</a>
+        <a class="btn ghost" href="https://nextchapterhomeschool.com/pages/fit?utm_source=author-site&amp;utm_medium=referral&amp;utm_campaign=home&amp;utm_content=hero-fit">Find your child's fit</a>
       </div>
     </div>
     <div class="art portrait">
@@ -116,6 +116,11 @@
   </section>
 </main>
 <script>
+if (new URLSearchParams(location.search).get("utm_source") === "ig") {
+  location.replace("/instagram" + location.search);
+}
+</script>
+<script>
 (function () {
   var API = "https://next-chapter-homeschool.vercel.app/api/leads";
   var FALLBACK = "https://nextchapterhomeschool.com/pages/subscribe";
@@ -164,6 +169,7 @@
   <div>&copy; 2026 Scott Somers &middot; Next Chapter Homeschool</div>
   <nav aria-label="Footer navigation">
     <a href="/">Home</a>
+    <a href="/instagram">Instagram Start Here</a>
     <a href="/about">About Scott</a>
     <a href="/wren-and-sitka">Wren and Sitka</a>
     <a href="/constitution-day">Constitution Day</a>

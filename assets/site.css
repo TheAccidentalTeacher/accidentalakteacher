@@ -125,6 +125,15 @@ h1{font-family:var(--display);font-weight:400;line-height:1;font-size:clamp(2.7r
 .thing p{flex:1}
 .thing .btns{margin-top:10px}
 
+.instagram-door .top{margin-bottom:0}
+.instagram-hero{padding-top:clamp(34px,5vw,72px)}
+.instagram-section{border-top:8px double var(--ink)}
+.instagram-section>h2{max-width:920px;margin-bottom:28px}
+.grade-links{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.grade-links a{display:grid;place-items:center;min-height:62px;padding:12px 8px;border:3px solid var(--ink);background:var(--paper);box-shadow:4px 4px 0 var(--stock-deep);color:var(--ink);font-family:var(--display);font-size:1.05rem;text-align:center;text-decoration:none;transition:transform .12s,box-shadow .12s}
+.grade-links a:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--red);color:var(--red)}
+.instagram-paths .thing:first-child{box-shadow:8px 8px 0 var(--red)}
+
 footer{margin-top:clamp(56px,8vw,96px);border-top:8px double var(--ink);padding:28px 0 56px;display:flex;justify-content:space-between;align-items:baseline;gap:16px 28px;flex-wrap:wrap;font-family:var(--fell);font-size:1.05rem}
 footer nav{display:flex;gap:8px 22px;flex-wrap:wrap}
 footer a{color:var(--ink)}
@@ -251,6 +260,7 @@ footer a:hover{color:var(--red)}
   .lesson-ledger{grid-template-columns:1fr}
   .buy-track-bundle,.field-signup{grid-template-columns:1fr}
   .bundle-cover img{max-width:330px}
+  .grade-links{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media (max-width:640px){
   body{font-size:1.12rem}
@@ -286,6 +296,8 @@ footer a:hover{color:var(--red)}
   .product-line{grid-template-columns:minmax(0,1fr) auto;gap:8px 14px}
   .product-go{grid-column:1/-1}
   .field-about{padding-right:18px}
+  .grade-links{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .grade-links a{min-height:54px;font-size:.95rem;box-shadow:3px 3px 0 var(--stock-deep)}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
