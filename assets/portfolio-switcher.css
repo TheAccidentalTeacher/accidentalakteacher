@@ -1,0 +1,21 @@
+:root{--portfolio-switcher-height:64px}
+html{scroll-padding-top:calc(var(--portfolio-switcher-height) + 24px)}
+.portfolio-switcher,.portfolio-switcher *{box-sizing:border-box}
+.portfolio-switcher{position:sticky;top:0;z-index:1000;width:100%;margin:0;padding:0;background:#202520;color:#f7f6ef;border-bottom:1px solid #4b5149;font-family:Inter,Arial,sans-serif;font-size:13px;line-height:1.3;letter-spacing:normal;text-transform:none}
+.portfolio-switcher-inner{width:min(1440px,100%);min-height:64px;margin:0 auto;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.portfolio-switcher a{color:inherit;text-decoration:none;overflow-wrap:normal}
+.portfolio-switcher-home{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.portfolio-switcher-home>span:first-child{font-size:14px;font-weight:650;letter-spacing:-.02em}
+.portfolio-switcher-home>span:last-child{font-size:11px;color:#b9c0b5;text-decoration:underline;text-underline-offset:4px}
+.portfolio-switcher-options{display:flex;align-items:center;gap:18px}
+.portfolio-switcher-label{color:#bdc4b8;font-size:11px;white-space:nowrap}
+.portfolio-switcher nav{display:flex;align-items:center;gap:5px}
+.portfolio-switcher nav a{display:block;min-height:40px;padding:11px 17px;border:1px solid transparent;border-radius:5px;font-size:12px;font-weight:550;white-space:nowrap}
+.portfolio-switcher nav a:hover{background:#353d34;border-color:#626b5e}
+.portfolio-switcher nav a[aria-current]{background:#f5f4ec;border-color:#f5f4ec;color:#202520}
+.portfolio-switcher a:focus-visible{outline:3px solid #b9d995;outline-offset:3px}
+body>.skip,body>.skip-link{position:fixed;z-index:1001}
+.process-layout aside{top:calc(var(--portfolio-switcher-height) + 30px)}
+@media(max-width:800px){.process-layout aside{position:static}}
+@media(max-width:620px){:root{--portfolio-switcher-height:106px}.portfolio-switcher-inner{min-height:106px;padding:10px 20px 11px;display:grid;grid-template-columns:minmax(0,1fr);gap:10px}.portfolio-switcher-home{justify-content:space-between;gap:12px}.portfolio-switcher-home>span:first-child{font-size:13px}.portfolio-switcher-home>span:last-child{font-size:10px}.portfolio-switcher-options{justify-content:space-between;gap:10px}.portfolio-switcher-label{font-size:10px}.portfolio-switcher nav{gap:3px}.portfolio-switcher nav a{min-height:36px;padding:9px 10px;font-size:11px}}
+@media(max-width:350px){.portfolio-switcher-inner{padding-inline:14px}.portfolio-switcher-label{font-size:9px}.portfolio-switcher nav a{padding-inline:8px}}

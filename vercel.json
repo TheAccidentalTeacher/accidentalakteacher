@@ -1,13 +1,353 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/work",
+      "destination": "/doxane/work.html",
+      "permanent": true
+    },
+    {
+      "source": "/work.html",
+      "destination": "/doxane/work.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/index.html",
+      "destination": "/doxane/work.html",
+      "permanent": true
+    },
+    {
+      "source": "/curriculum",
+      "destination": "/doxane/curriculum.html",
+      "permanent": true
+    },
+    {
+      "source": "/curriculum.html",
+      "destination": "/doxane/curriculum.html",
+      "permanent": true
+    },
+    {
+      "source": "/curriculum/index.html",
+      "destination": "/doxane/curriculum.html",
+      "permanent": true
+    },
+    {
+      "source": "/how-i-work",
+      "destination": "/doxane/how-i-work.html",
+      "permanent": true
+    },
+    {
+      "source": "/how-i-work.html",
+      "destination": "/doxane/how-i-work.html",
+      "permanent": true
+    },
+    {
+      "source": "/how-i-work/index.html",
+      "destination": "/doxane/how-i-work.html",
+      "permanent": true
+    },
+    {
+      "source": "/technical-skills",
+      "destination": "/doxane/technical-skills.html",
+      "permanent": true
+    },
+    {
+      "source": "/technical-skills.html",
+      "destination": "/doxane/technical-skills.html",
+      "permanent": true
+    },
+    {
+      "source": "/technical-skills/index.html",
+      "destination": "/doxane/technical-skills.html",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/doxane/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "destination": "/doxane/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/about/index.html",
+      "destination": "/doxane/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/doxane/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/doxane/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact/index.html",
+      "destination": "/doxane/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "/doxane/resources.html",
+      "permanent": true
+    },
+    {
+      "source": "/resources.html",
+      "destination": "/doxane/resources.html",
+      "permanent": true
+    },
+    {
+      "source": "/resources/index.html",
+      "destination": "/doxane/resources.html",
+      "permanent": true
+    },
+    {
+      "source": "/wren-and-sitka",
+      "destination": "/doxane/wren-and-sitka.html",
+      "permanent": true
+    },
+    {
+      "source": "/wren-and-sitka.html",
+      "destination": "/doxane/wren-and-sitka.html",
+      "permanent": true
+    },
+    {
+      "source": "/wren-and-sitka/index.html",
+      "destination": "/doxane/wren-and-sitka.html",
+      "permanent": true
+    },
+    {
+      "source": "/constitution-day",
+      "destination": "/doxane/constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/constitution-day.html",
+      "destination": "/doxane/constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/constitution-day/index.html",
+      "destination": "/doxane/constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/instagram",
+      "destination": "/doxane/instagram.html",
+      "permanent": true
+    },
+    {
+      "source": "/instagram.html",
+      "destination": "/doxane/instagram.html",
+      "permanent": true
+    },
+    {
+      "source": "/instagram/index.html",
+      "destination": "/doxane/instagram.html",
+      "permanent": true
+    },
+    {
+      "source": "/x",
+      "destination": "/doxane/x.html",
+      "permanent": true
+    },
+    {
+      "source": "/x.html",
+      "destination": "/doxane/x.html",
+      "permanent": true
+    },
+    {
+      "source": "/x/index.html",
+      "destination": "/doxane/x.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-tennis-math-map",
+      "destination": "/doxane/case-tennis-math-map.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-tennis-math-map.html",
+      "destination": "/doxane/case-tennis-math-map.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-tennis-math-map/index.html",
+      "destination": "/doxane/case-tennis-math-map.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-geography-detective-academy",
+      "destination": "/doxane/case-geography-detective-academy.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-geography-detective-academy.html",
+      "destination": "/doxane/case-geography-detective-academy.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-geography-detective-academy/index.html",
+      "destination": "/doxane/case-geography-detective-academy.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-field-notebook",
+      "destination": "/doxane/case-field-notebook.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-field-notebook.html",
+      "destination": "/doxane/case-field-notebook.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-field-notebook/index.html",
+      "destination": "/doxane/case-field-notebook.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-constitution-day",
+      "destination": "/doxane/case-constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-constitution-day.html",
+      "destination": "/doxane/case-constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-constitution-day/index.html",
+      "destination": "/doxane/case-constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-math-outpost",
+      "destination": "/doxane/case-math-outpost.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-math-outpost.html",
+      "destination": "/doxane/case-math-outpost.html",
+      "permanent": true
+    },
+    {
+      "source": "/case-math-outpost/index.html",
+      "destination": "/doxane/case-math-outpost.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/tennis-math-map",
+      "destination": "/doxane/case-tennis-math-map.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/tennis-math-map/index.html",
+      "destination": "/doxane/case-tennis-math-map.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/tennis-math-map.html",
+      "destination": "/doxane/case-tennis-math-map.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/geography-detective-academy",
+      "destination": "/doxane/case-geography-detective-academy.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/geography-detective-academy/index.html",
+      "destination": "/doxane/case-geography-detective-academy.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/geography-detective-academy.html",
+      "destination": "/doxane/case-geography-detective-academy.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/field-notebook",
+      "destination": "/doxane/case-field-notebook.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/field-notebook/index.html",
+      "destination": "/doxane/case-field-notebook.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/field-notebook.html",
+      "destination": "/doxane/case-field-notebook.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/constitution-day",
+      "destination": "/doxane/case-constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/constitution-day/index.html",
+      "destination": "/doxane/case-constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/constitution-day.html",
+      "destination": "/doxane/case-constitution-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/math-outpost",
+      "destination": "/doxane/case-math-outpost.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/math-outpost/index.html",
+      "destination": "/doxane/case-math-outpost.html",
+      "permanent": true
+    },
+    {
+      "source": "/work/math-outpost.html",
+      "destination": "/doxane/case-math-outpost.html",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/index-BsHritPd.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/index-COH3yL8V.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
