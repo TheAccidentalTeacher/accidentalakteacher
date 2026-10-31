@@ -1,0 +1,24 @@
+.identity-article,.identity-doorway{--essay-ink:#173d32;--essay-muted:#536b60;--essay-paper:#f5faf4;--essay-line:#c4d6c8;--essay-accent:#006c53;color:var(--essay-ink);background:var(--essay-paper);box-sizing:border-box;text-transform:none}
+.identity-prestige{--essay-ink:#f0f0e7;--essay-muted:#b7beb3;--essay-paper:#171b17;--essay-line:#485044;--essay-accent:#c5dfb1}
+.identity-air{--essay-ink:#183d6a;--essay-muted:#52667c;--essay-paper:#faf8ef;--essay-line:#cbd7e3;--essay-accent:#2561c4}
+.identity-article{padding:72px 24px 88px;margin:0;max-width:none}
+.identity-masthead,.identity-prose{width:min(760px,100%);margin-inline:auto}
+.identity-masthead{padding-bottom:38px;border-bottom:1px solid var(--essay-line);margin-bottom:40px}
+.identity-eyebrow{font:600 11px/1.5 Inter,Arial,sans-serif!important;letter-spacing:1.7px!important;text-transform:uppercase!important;color:var(--essay-accent)!important;margin:0 0 15px!important}
+.identity-masthead h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(42px,6vw,78px);line-height:1.06;letter-spacing:-2px;text-transform:none;color:var(--essay-ink);margin:0 0 24px;max-width:900px}
+.identity-deck{font:22px/1.55 Georgia,'Times New Roman',serif!important;color:var(--essay-ink)!important;max-width:none!important;margin:0 0 24px!important}
+.identity-byline{font:13px/1.7 Inter,Arial,sans-serif!important;letter-spacing:0!important;color:var(--essay-muted)!important;margin:0!important;text-transform:none!important}
+.identity-prose{font:20px/1.82 Georgia,'Times New Roman',serif;text-align:left}
+.identity-prose p{font:inherit;color:var(--essay-ink);max-width:none;margin:0 0 25px;letter-spacing:0}
+.identity-prose h2{font:400 32px/1.25 Georgia,'Times New Roman',serif;letter-spacing:-.4px;text-transform:none;color:var(--essay-ink);margin:52px 0 22px;scroll-margin-top:calc(var(--portfolio-switcher-height,64px) + 24px)}
+.identity-prose a,.identity-read{color:var(--essay-accent);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;overflow-wrap:anywhere}
+.identity-prose a:focus-visible,.identity-read:focus-visible{outline:3px solid var(--essay-accent);outline-offset:5px}
+.identity-doorway{width:min(1280px,calc(100% - 64px));margin:38px auto;padding:32px 36px;border:1px solid var(--essay-line);display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:40px;align-items:center}
+.identity-doorway h2{font:400 35px/1.2 Georgia,'Times New Roman',serif;letter-spacing:-.5px;text-transform:none;color:var(--essay-ink);margin:0 0 14px}
+.identity-doorway p:not(.identity-eyebrow){font:16px/1.7 Inter,Arial,sans-serif;letter-spacing:0;text-transform:none;color:var(--essay-ink);max-width:760px;margin:0 0 18px}
+.identity-read{font:600 14px/1.6 Inter,Arial,sans-serif}
+.identity-cover-link{display:block;border:1px solid var(--essay-line)}
+.identity-cover-link img{display:block;width:100%;height:auto;max-width:none;object-fit:contain}
+.identity-home-link{display:inline-block;margin-top:18px!important}
+@media(max-width:700px){.identity-article{padding:45px 22px 60px}.identity-masthead h1{letter-spacing:-1px}.identity-masthead{margin-bottom:30px;padding-bottom:30px}.identity-prose{font-size:18px;line-height:1.8}.identity-prose h2{font-size:28px;margin-top:40px}.identity-doorway{width:calc(100% - 40px);padding:25px;grid-template-columns:1fr;gap:24px;margin:28px auto}.identity-cover-link{display:none}.identity-doorway h2{font-size:31px}.identity-deck{font-size:20px!important}}
+@media print{.identity-article{padding:0;color:#111;background:white}.identity-prose,.identity-masthead{width:100%;color:#111}.identity-prose p,.identity-prose h2,.identity-masthead h1{color:#111}.identity-prose h2{break-after:avoid}.identity-prose p{orphans:3;widows:3}.site-header,.site-footer,.portfolio-switcher,.identity-doorway{display:none!important}}

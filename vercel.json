@@ -173,6 +173,16 @@
       "permanent": true
     },
     {
+      "source": "/i-build-around-the-child.html",
+      "destination": "/doxane/i-build-around-the-child.html",
+      "permanent": true
+    },
+    {
+      "source": "/i-build-around-the-child/index.html",
+      "destination": "/doxane/i-build-around-the-child.html",
+      "permanent": true
+    },
+    {
       "source": "/case-tennis-math-map",
       "destination": "/doxane/case-tennis-math-map.html",
       "permanent": true
@@ -323,6 +333,12 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    {
+      "source": "/i-build-around-the-child",
+      "destination": "/doxane/i-build-around-the-child.html"
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -334,7 +350,7 @@
       ]
     },
     {
-      "source": "/assets/index-BsHritPd.css",
+      "source": "/assets/index-BrS0me8N.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -343,7 +359,7 @@
       ]
     },
     {
-      "source": "/assets/index-COH3yL8V.js",
+      "source": "/assets/index-D-G2aBci.css",
       "headers": [
         {
           "key": "Cache-Control",
