@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Practice Assignment: Reading and Filling Out a Form W-2</title>
+<style>
+  :root{
+    --desk:#e8e5de; --paper:#ffffff; --ink:#15181c; --muted:#58606a; --rule:#1a1d21; --hair:#c9c4b8;
+    --accent:#9b1c1c; --ok:#17613a; --okbg:#e7f3ec; --warn:#7a5200; --warnbg:#fbf1da; --bad:#9b1c1c; --badbg:#fbe9e7;
+    --field:#fff9e8; --focus:#0b57d0;
+    --mono:"Cascadia Mono","Consolas","Courier New",monospace;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:"Segoe UI",Arial,Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--desk)}
+  body{margin:0;color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.5;background:var(--desk)}
+  .wrap{max-width:1040px;margin:0 auto;padding:28px 16px 64px}
+  .sheet{background:var(--paper);border:1px solid var(--hair);padding:28px 32px;margin-bottom:22px}
+  header.top{background:var(--paper);border:1px solid var(--hair);border-top:6px solid var(--ink);padding:24px 32px;margin-bottom:22px}
+  .kicker{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 6px}
+  h1{font-family:var(--serif);font-size:38px;line-height:1.1;margin:0 0 8px}
+  .lede{color:var(--muted);margin:0 0 18px;max-width:46em}
+  .bar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;border-top:1px solid var(--hair);padding-top:14px}
+  .bar label{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;display:block}
+  .vcode{font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:.12em}
+  input[type=text]{font:inherit}
+  .nameinput{font-size:18px;padding:8px 10px;border:1px solid var(--hair);width:250px;max-width:100%;background:#fff}
+  button{font:inherit;font-weight:600;font-size:17px;padding:10px 18px;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+  button.secondary{background:#fff;color:var(--ink)}
+  button:hover{filter:brightness(1.15)}
+  button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  h2{font-family:var(--serif);font-size:27px;margin:0 0 4px}
+  .part{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 4px}
+  .task{color:var(--muted);margin:0 0 16px}
+
+  /* scenario cards */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .card{border:1px solid var(--rule);padding:14px 16px}
+  .card h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px;color:var(--muted)}
+  .card .big{font-family:var(--serif);font-size:23px;line-height:1.2;margin:0 0 4px}
+  .card dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:16px}
+  .card dt{color:var(--muted)} .card dd{margin:0;font-family:var(--mono)}
+  table.stub{width:100%;border-collapse:collapse;font-size:17px}
+  table.stub caption{text-align:left;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 0 6px}
+  table.stub th,table.stub td{padding:8px 10px;border-top:1px solid var(--hair);text-align:left;vertical-align:top}
+  table.stub tr:last-child th,table.stub tr:last-child td{border-bottom:1px solid var(--hair)}
+  table.stub td.amt{text-align:right;font-family:var(--mono);white-space:nowrap}
+  table.stub .note{display:block;font-size:14px;color:var(--muted);font-weight:400}
+  .stubwrap{border:1px solid var(--rule);padding:14px 16px}
+
+  details.ref{border:1px solid var(--rule);margin:16px 0 0;background:#faf8f2}
+  details.ref summary{cursor:pointer;padding:12px 16px;font-weight:700}
+  details.ref .in{padding:0 16px 14px;font-size:16px}
+  details.ref table{border-collapse:collapse;width:100%;margin:6px 0}
+  details.ref td,details.ref th{border:1px solid var(--hair);padding:6px 10px;text-align:left}
+  details.ref ul{margin:6px 0;padding-left:22px}
+
+  /* the W-2 form */
+  .w2{border:2px solid var(--rule);background:#fff;font-family:Arial,Helvetica,sans-serif}
+  .w2head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--rule);padding:8px 12px;gap:12px;flex-wrap:wrap}
+  .w2head b{font-size:22px;letter-spacing:.02em}
+  .w2head span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .w2body{display:grid;grid-template-columns:1.05fr 1fr}
+  .w2left{border-right:2px solid var(--rule)}
+  .box{position:relative;border-bottom:1px solid var(--rule);padding:4px 8px 8px;min-height:74px}
+  .box:last-child{border-bottom:0}
+  .cap{font-size:11.5px;line-height:1.2;color:#333;display:block;margin-bottom:3px}
+  .cap b{font-size:13px;margin-right:4px}
+  .box input[type=text]{width:100%;font-family:var(--mono);font-size:20px;padding:6px 8px;border:1px solid #8c8577;background:var(--field);min-width:0}
+  .box input[disabled]{background:repeating-linear-gradient(135deg,#f1eee6,#f1eee6 6px,#e8e4d9 6px,#e8e4d9 12px);border-color:#cfc9ba}
+  .addr{font-family:var(--mono);font-size:16px;line-height:1.35;padding:2px 0 0;color:#222;white-space:pre-line}
+  .pair{display:grid;grid-template-columns:1fr 1fr}
+  .pair .box{border-right:1px solid var(--rule)}
+  .pair .box:nth-child(2n){border-right:0}
+  .dollar{display:flex;align-items:center;gap:4px}
+  .dollar i{font-style:normal;font-family:var(--mono);font-size:20px}
+  .row12{display:grid;grid-template-columns:70px 1fr;gap:6px}
+  .checks{display:flex;flex-direction:column;gap:6px;font-size:14px;padding-top:2px}
+  .checks label{display:flex;gap:8px;align-items:center;cursor:pointer}
+  .checks input{width:22px;height:22px;accent-color:var(--ink)}
+  .w2bottom{display:grid;grid-template-columns:1fr 1.3fr 1.3fr 1.3fr;border-top:2px solid var(--rule)}
+  .w2bottom .box{border-right:1px solid var(--rule);border-bottom:0}
+  .w2bottom .box:last-child{border-right:0}
+  .w2row2{display:grid;grid-template-columns:1fr 1.3fr 1.3fr 1.3fr;border-top:1px solid var(--rule)}
+  .fb{font-family:var(--sans);font-size:14.5px;line-height:1.35;margin-top:5px;padding:6px 8px;display:none}
+  .fb.show{display:block}
+  .fb.ok{background:var(--okbg);color:var(--ok);border-left:4px solid var(--ok)}
+  .fb.partial{background:var(--warnbg);color:var(--warn);border-left:4px solid var(--warn)}
+  .fb.wrong{background:var(--badbg);color:var(--bad);border-left:4px solid var(--bad)}
+  .fb.empty{background:#f0f0f0;color:#444;border-left:4px solid #888}
+  .fb .method{display:block;margin-top:4px;color:#222;font-weight:600}
+  .st-ok input[type=text]{border-color:var(--ok);border-width:2px}
+  .st-wrong input[type=text]{border-color:var(--bad);border-width:2px}
+  .st-partial input[type=text]{border-color:var(--warn);border-width:2px}
+
+  .actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+  .summary{font-weight:700;font-size:19px}
+  .summary.good{color:var(--ok)} .summary.bad{color:var(--bad)}
+
+  /* questions */
+  .q{border-top:1px solid var(--hair);padding:14px 0}
+  .q:first-of-type{border-top:2px solid var(--rule)}
+  .q p{margin:0 0 8px;font-weight:600}
+  .q .num{font-family:var(--mono);color:var(--accent);margin-right:8px}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:5px 0;cursor:pointer}
+  .opt input{margin-top:6px;width:20px;height:20px;accent-color:var(--ink)}
+  .q input[type=text]{font-family:var(--mono);font-size:20px;padding:6px 8px;border:1px solid #8c8577;background:var(--field);width:220px;max-width:100%}
+
+  .teacher{border:2px dashed var(--accent);background:#fff8f6}
+  .teacher table{border-collapse:collapse;width:100%;font-size:16px}
+  .teacher td,.teacher th{border:1px solid var(--hair);padding:5px 10px;text-align:left;font-family:var(--mono)}
+  .teacher th{font-family:var(--sans)}
+  footer.fine{color:var(--muted);font-size:14.5px;max-width:52em}
+  .hide{display:none!important}
+
+  @media (max-width:820px){
+    body{font-size:17px} .sheet,header.top{padding:18px 16px} h1{font-size:30px}
+    .cards{grid-template-columns:1fr}
+    .w2body{grid-template-columns:1fr} .w2left{border-right:0;border-bottom:2px solid var(--rule)}
+    .w2bottom,.w2row2{grid-template-columns:1fr 1fr}
+    .w2bottom .box:nth-child(2n){border-right:0}
+  }
+  @media print{
+    html,body{background:#fff} .actions button,.bar button,#newver,.nameinput{display:none}
+    .sheet,header.top{border:0;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="kicker">Practice assignment &middot; Payroll and tax forms</p>
+  <h1>Reading and Filling Out a Form W-2</h1>
+  <p class="lede">You are the payroll clerk. Read the earnings statement for one employee, then complete that employee&rsquo;s W-2 and answer four questions about it. When a box is wrong, the checker tells you where to look. It does not hand you the number.</p>
+  <div class="bar">
+    <div><label for="student">Your name</label><input id="student" class="nameinput" type="text" autocomplete="off" placeholder="First and last name"></div>
+    <div><label>Version code</label><span class="vcode" id="vcode">-----</span></div>
+    <div><button class="secondary" id="newver" type="button">Start a new version</button></div>
+  </div>
+</header>
+
+<section class="sheet" aria-labelledby="p1">
+  <p class="part">Part 1</p>
+  <h2 id="p1">Meet your employee</h2>
+  <p class="task">Everything you need is on these three cards. All people and businesses in this assignment are fictional.</p>
+  <div class="cards">
+    <div class="card" id="empcard"></div>
+    <div class="card" id="bizcard"></div>
+  </div>
+  <div class="stubwrap"><table class="stub" id="stub"></table></div>
+  <details class="ref">
+    <summary>Reference card (open it if you need it)</summary>
+    <div class="in">
+      <table>
+        <tr><th>Social Security tax rate</th><td>6.2% of Box 3, rounded to the nearest cent</td></tr>
+        <tr><th>Medicare tax rate</th><td>1.45% of Box 5, rounded to the nearest cent</td></tr>
+      </table>
+      <p><b>Box 12 codes (a few of them)</b></p>
+      <table>
+        <tr><th>D</th><td>Employee contributions to a 401(k)</td></tr>
+        <tr><th>DD</th><td>Cost of employer-sponsored health coverage (shown for information)</td></tr>
+        <tr><th>W</th><td>Employer contributions to a health savings account</td></tr>
+        <tr><th>AA</th><td>Roth contributions to a 401(k)</td></tr>
+      </table>
+      <ul>
+        <li><b>Box 13, Retirement plan:</b> check it when the employee took part in the employer&rsquo;s retirement plan during the year.</li>
+        <li><b>Blank boxes:</b> when there is nothing to report in a box, leave it blank.</li>
+        <li><b>State wages (Box 16):</b> in this assignment, state wages are the same as Box 1.</li>
+        <li>Every employee here earned less than the Social Security wage limit, so you do not need to look it up.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<section class="sheet" aria-labelledby="p2">
+  <p class="part">Part 2</p>
+  <h2 id="p2">Complete the W-2</h2>
+  <p class="task">Fill in every box that is open. Boxes with the hatched pattern are not used in this assignment. Dollar boxes take numbers like <b>12,345.67</b>.</p>
+
+  <form id="w2form" class="w2" autocomplete="off" onsubmit="return false">
+    <div class="w2head"><b>Form W-2 &nbsp;Wage and Tax Statement</b><span>Practice copy &middot; not for filing &middot; tax year 2026</span></div>
+    <div class="w2body">
+      <div class="w2left">
+        <div class="box" data-f="a"><label class="cap" for="f-a"><b>a</b>Employee&rsquo;s social security number</label>
+          <input id="f-a" type="text" inputmode="numeric" data-input="a" placeholder="000-00-0000"><div class="fb" role="status"></div></div>
+        <div class="box" data-f="b"><label class="cap" for="f-b"><b>b</b>Employer identification number (EIN)</label>
+          <input id="f-b" type="text" inputmode="numeric" data-input="b" placeholder="00-0000000"><div class="fb" role="status"></div></div>
+        <div class="box" data-f="c"><label class="cap" for="f-c"><b>c</b>Employer&rsquo;s name, address, and ZIP code</label>
+          <input id="f-c" type="text" data-input="c" placeholder="Employer name"><div class="addr" id="c-addr"></div><div class="fb" role="status"></div></div>
+        <div class="box" data-f="e1"><label class="cap" for="f-e1"><b>e</b>Employee&rsquo;s first name and initial</label>
+          <input id="f-e1" type="text" data-input="e1" placeholder="First name"><div class="fb" role="status"></div></div>
+        <div class="box" data-f="e2"><label class="cap" for="f-e2"><b>e</b>Last name</label>
+          <input id="f-e2" type="text" data-input="e2" placeholder="Last name"><div class="fb" role="status"></div></div>
+        <div class="box"><span class="cap"><b>f</b>Employee&rsquo;s address and ZIP code</span><div class="addr" id="f-addr"></div></div>
+      </div>
+      <div class="w2right">
+        <div class="pair">
+          <div class="box" data-f="b1"><label class="cap" for="f-b1"><b>1</b>Wages, tips, other compensation</label><div class="dollar"><i>$</i><input id="f-b1" type="text" inputmode="decimal" data-input="b1"></div><div class="fb" role="status"></div></div>
+          <div class="box" data-f="b2"><label class="cap" for="f-b2"><b>2</b>Federal income tax withheld</label><div class="dollar"><i>$</i><input id="f-b2" type="text" inputmode="decimal" data-input="b2"></div><div class="fb" role="status"></div></div>
+          <div class="box" data-f="b3"><label class="cap" for="f-b3"><b>3</b>Social security wages</label><div class="dollar"><i>$</i><input id="f-b3" type="text" inputmode="decimal" data-input="b3"></div><div class="fb" role="status"></div></div>
+          <div class="box" data-f="b4"><label class="cap" for="f-b4"><b>4</b>Social security tax withheld</label><div class="dollar"><i>$</i><input id="f-b4" type="text" inputmode="decimal" data-input="b4"></div><div class="fb" role="status"></div></div>
+          <div class="box" data-f="b5"><label class="cap" for="f-b5"><b>5</b>Medicare wages and tips</label><div class="dollar"><i>$</i><input id="f-b5" type="text" inputmode="decimal" data-input="b5"></div><div class="fb" role="status"></div></div>
+          <div class="box" data-f="b6"><label class="cap" for="f-b6"><b>6</b>Medicare tax withheld</label><div class="dollar"><i>$</i><input id="f-b6" type="text" inputmode="decimal" data-input="b6"></div><div class="fb" role="status"></div></div>
+          <div class="box"><label class="cap" for="f-b7"><b>7</b>Social security tips</label><input id="f-b7" type="text" disabled></div>
+          <div class="box"><label class="cap" for="f-b8"><b>8</b>Allocated tips</label><input id="f-b8" type="text" disabled></div>
+          <div class="box"><label class="cap" for="f-b10"><b>10</b>Dependent care benefits</label><input id="f-b10" type="text" disabled></div>
+          <div class="box"><label class="cap" for="f-b11"><b>11</b>Nonqualified plans</label><input id="f-b11" type="text" disabled></div>
+        </div>
+        <div class="box" data-f="b12a"><span class="cap"><b>12a</b>See instructions for box 12 &nbsp;(code, then amount)</span>
+          <div class="row12"><input id="f-b12c" type="text" data-input="b12c" aria-label="Box 12a code" maxlength="2" placeholder="Code"><div class="dollar"><i>$</i><input id="f-b12a" type="text" inputmode="decimal" data-input="b12a" aria-label="Box 12a amount"></div></div><div class="fb" role="status"></div></div>
+        <div class="pair">
+          <div class="box" data-f="b13"><span class="cap"><b>13</b>Check the boxes that apply</span>
+            <div class="checks">
+              <label><input type="checkbox" data-check="statutory"> Statutory employee</label>
+              <label><input type="checkbox" data-check="retirement"> Retirement plan</label>
+              <label><input type="checkbox" data-check="sick"> Third-party sick pay</label>
+            </div><div class="fb" role="status"></div></div>
+          <div class="box"><label class="cap" for="f-b14"><b>14</b>Other</label><input id="f-b14" type="text" disabled></div>
+        </div>
+      </div>
+    </div>
+    <div class="w2bottom">
+      <div class="box" data-f="b15"><label class="cap" for="f-b15"><b>15</b>State</label><input id="f-b15" type="text" data-input="b15" maxlength="2" placeholder="XX"><div class="fb" role="status"></div></div>
+      <div class="box"><label class="cap" for="f-b15id">Employer&rsquo;s state ID number</label><input id="f-b15id" type="text" disabled></div>
+      <div class="box" data-f="b16"><label class="cap" for="f-b16"><b>16</b>State wages, tips, etc.</label><div class="dollar"><i>$</i><input id="f-b16" type="text" inputmode="decimal" data-input="b16"></div><div class="fb" role="status"></div></div>
+      <div class="box" data-f="b17"><label class="cap" for="f-b17"><b>17</b>State income tax</label><div class="dollar"><i>$</i><input id="f-b17" type="text" inputmode="decimal" data-input="b17"></div><div class="fb" role="status"></div></div>
+    </div>
+    <div class="w2row2">
+      <div class="box"><span class="cap">&nbsp;</span></div>
+      <div class="box"><label class="cap" for="f-b18"><b>18</b>Local wages, tips, etc.</label><input id="f-b18" type="text" disabled></div>
+      <div class="box"><label class="cap" for="f-b19"><b>19</b>Local income tax</label><input id="f-b19" type="text" disabled></div>
+      <div class="box"><label class="cap" for="f-b20"><b>20</b>Locality name</label><input id="f-b20" type="text" disabled></div>
+    </div>
+  </form>
+
+  <div class="actions">
+    <button id="checkform" type="button">Check the form</button>
+    <button class="secondary" id="clearform" type="button">Clear the form</button>
+    <span class="summary" id="formsummary" role="status" aria-live="polite"></span>
+  </div>
+</section>
+
+<section class="sheet" aria-labelledby="p3">
+  <p class="part">Part 3</p>
+  <h2 id="p3">Read the W-2 you just completed</h2>
+  <p class="task">Answer from the pay summary and your completed form.</p>
+  <div id="questions"></div>
+  <div class="actions">
+    <button id="checkq" type="button">Check my answers</button>
+    <span class="summary" id="qsummary" role="status" aria-live="polite"></span>
+  </div>
+</section>
+
+<section class="sheet teacher hide" id="teacherkey" aria-labelledby="tk">
+  <p class="part">Teacher view</p>
+  <h2 id="tk">Answer key for this version</h2>
+  <p class="task">Computed by code from the scenario facts for version <b id="tkcode"></b>. In a live course this panel would be shown to teachers only.</p>
+  <table id="tktable"></table>
+</section>
+
+<footer class="fine">
+  <p>Practice tool for classroom use. Every answer key is computed by code from the facts on the pay summary, so each version has its own key. Modeled on IRS Form W-2; not an official form, not for filing, and not tax advice. All people, addresses and businesses are fictional.</p>
+  <p>Built by Scott Somers &middot; accidentalakteacher.com</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- seeded generator ---------- */
+var ALPHA='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function hashStr(s){var h=1779033703^s.length;for(var i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=(h<<13)|(h>>>19);}return h>>>0;}
+function rng(seed){var a=seed>>>0;return function(){a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+function newCode(){var s='';for(var i=0;i<5;i++)s+=ALPHA[Math.floor(Math.random()*ALPHA.length)];return s;}
+
+var FIRST=['Maria','Daniel','Priya','Marcus','Elena','Tyler','Grace','Omar','Hannah','Luis','Naomi','Caleb','Aisha','Ethan','Rosa','Jonah','Tessa','Andre','Lydia','Mateo','Wren','Isaac','Dana','Felix'];
+var LAST=['Alvarez','Brennan','Castellano','Dawson','Ellison','Farouk','Gallagher','Hollis','Iverson','Jimenez','Kowalski','Larkin','Mbeki','Novak','Okafor','Prescott','Quintero','Rasmussen','Sandoval','Thorne','Underhill','Vasquez','Whitlock','Yamada'];
+var ROLE=['dental assistant','warehouse lead','bookkeeper','line cook','front desk coordinator','delivery driver','machine operator','pharmacy technician','shop foreman','office manager','classroom aide','sales associate'];
+var BIZ1=['Cedar Bluff','Harbor Light','Summit Ridge','Prairie Gate','Copper Creek','Maple Row','Stonebridge','Northfield','Riverbend','Lantern Hill','Pine Hollow','Granite Peak'];
+var BIZ2=['Family Dental','Supply Co.','Bookkeeping LLC','Kitchen and Catering','Veterinary Clinic','Hardware','Print Shop','Auto Repair','Insurance Group','Landscaping','Pharmacy','Equipment Rental'];
+var STREET=['Birch Lane','Mill Street','Cottonwood Drive','Second Avenue','Harbor Road','Ridge Court','Willow Way','Depot Street','Aspen Circle','Quarry Road'];
+var NOTAX=[['AK',[['Wasilla','99654'],['Fairbanks','99701'],['Palmer','99645']]],['TX',[['Waco','76701'],['Abilene','79601']]],['FL',[['Ocala','34470']]],['WA',[['Spokane','99201'],['Yakima','98901']]],['NV',[['Reno','89501']]],['TN',[['Knoxville','37902']]]];
+var TAXED=[['CO',[['Pueblo','81003'],['Grand Junction','81501']]],['OH',[['Dayton','45402'],['Toledo','43604']]],['IL',[['Peoria','61602'],['Rockford','61101']]],['NC',[['Asheville','28801'],['Greensboro','27401']]],['GA',[['Macon','31201'],['Augusta','30901']]],['AZ',[['Tucson','85701'],['Flagstaff','86001']]],['UT',[['Provo','84601'],['Ogden','84401']]],['MN',[['Duluth','55802']]],['VA',[['Roanoke','24011']]],['OR',[['Eugene','97401'],['Salem','97301']]]];
+var PERIODS=[{n:52,label:'weekly'},{n:26,label:'every two weeks'},{n:24,label:'twice a month'},{n:12,label:'monthly'}];
+
+function roundHalfUp(num,den){return Math.floor((num*2+den)/(den*2));} /* integers only */
+
+function buildScenario(code){
+  code=String(code||'').toUpperCase();
+  var r=rng(hashStr('W2-practice-'+code));
+  var pick=function(a){return a[Math.floor(r()*a.length)];};
+  var per=pick(PERIODS);
+  var grossDollars=(380+Math.floor(r()*581))*100;          /* 38,000 to 96,000 in whole hundreds */
+  var gross=grossDollars*100;                              /* cents */
+  var has401k=r()<0.8, hasHealth=r()<0.75; if(!has401k&&!hasHealth)hasHealth=true;
+  var pct=pick([3,4,5,6,8]);
+  var k401=has401k?(grossDollars*pct/100)*100:0;
+  var healthPer=hasHealth?(40+Math.floor(r()*100))*100+pick([0,50]):0;
+  var health=healthPer*per.n;
+  var match=has401k?(grossDollars*Math.min(pct,3)/100)*100:0;
+  var grossPer=grossDollars/per.n;
+  var fedPer=Math.round(grossPer*(0.06+r()*0.07));
+  var fed=fedPer*100*per.n;
+  var taxed=r()<0.6;
+  var st=pick(taxed?TAXED:NOTAX), city=pick(st[1]);
+  var statePer=taxed?Math.round(grossPer*(0.02+r()*0.025)):0;
+  var stateTax=statePer*100*per.n;
+  var first=pick(FIRST), last=pick(LAST);
+  var biz=pick(BIZ1)+' '+pick(BIZ2);
+  var ssn='000-'+String(10+Math.floor(r()*90))+'-'+String(1000+Math.floor(r()*9000));
+  var ein='00-'+String(1000000+Math.floor(r()*9000000));
+  var empAddr=(100+Math.floor(r()*880))+' '+pick(STREET);
+  var bizAddr=(100+Math.floor(r()*880))+' '+pick(STREET);
+  /* the employee lives and works in the same state in this assignment */
+  var emp={first:first,last:last,role:pick(ROLE),ssn:ssn,street:empAddr,city:city[0],state:st[0],zip:city[1]};
+  var employer={name:biz,ein:ein,street:bizAddr,city:city[0],state:st[0],zip:city[1]};
+  var b1=gross-k401-health, b3=gross-health, b5=b3;
+  var key={
+    a:ssn.replace(/\D/g,''), b:ein.replace(/\D/g,''), c:biz, e1:first, e2:last,
+    b1:b1, b2:fed, b3:b3, b4:roundHalfUp(b3*62,1000), b5:b5, b6:roundHalfUp(b5*145,10000),
+    b12c:has401k?'D':'', b12a:has401k?k401:null,
+    retirement:has401k,
+    b15:taxed?st[0]:'', b16:taxed?b1:null, b17:taxed?stateTax:null
+  };
+  return {code:code,per:per,gross:gross,k401:k401,pct:pct,health:health,healthPer:healthPer,has401k:has401k,hasHealth:hasHealth,
+          match:match,fed:fed,taxed:taxed,stateTax:stateTax,emp:emp,employer:employer,key:key};
+}
+
+/* ---------- formatting / parsing ---------- */
+function money(c){var neg=c<0;c=Math.abs(c);var d=Math.floor(c/100),cc=String(c%100).padStart(2,'0');return (neg?'-':'')+'$'+String(d).replace(/\B(?=(\d{3})+(?!\d))/g,',')+'.'+cc;}
+function parseMoney(s){s=String(s==null?'':s).replace(/[$,\s]/g,'');if(s==='')return null;if(!/^\d+(\.\d{1,2})?$/.test(s))return NaN;var p=s.split('.');return parseInt(p[0],10)*100+(p[1]?parseInt((p[1]+'0').slice(0,2),10):0);}
+function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
+function digits(s){return String(s||'').replace(/\D/g,'');}
+
+/* ---------- diagnosis: points at a box or a line, never states the answer ---------- */
+function res(s,m){return {s:s,m:m};}
+var FIELD_LABEL={a:'Box a',b:'Box b',c:'Box c',e1:'Box e (first name)',e2:'Box e (last name)',b1:'Box 1',b2:'Box 2',b3:'Box 3',b4:'Box 4',b5:'Box 5',b6:'Box 6',b12c:'Box 12a (code)',b12a:'Box 12a (amount)',b13:'Box 13',b15:'Box 15',b16:'Box 16',b17:'Box 17'};
+var MONEY_FIELDS=['b1','b2','b3','b4','b5','b6','b12a','b16','b17'];
+var TEXT_FIELDS=['a','b','c','e1','e2','b12c','b15'];
+var REQUIRED_ORDER=['a','b','c','e1','e2','b1','b2','b3','b4','b5','b6','b12c','b12a','b15','b16','b17'];
+
+function methodFor(f,sc){
+  switch(f){
+    case 'b1':return 'Method: start with gross pay, then take away every line marked pre-tax for income tax.';
+    case 'b3':return 'Method: start with gross pay. Take away only the pre-tax lines that Social Security tax is also not charged on. A 401(k) deferral is still subject to Social Security tax.';
+    case 'b5':return 'Method: Medicare wages are figured the same way as Box 3 in this assignment.';
+    case 'b4':return 'Method: Box 3 times the Social Security rate on the reference card, rounded to the nearest cent.';
+    case 'b6':return 'Method: Box 5 times the Medicare rate on the reference card, rounded to the nearest cent.';
+    case 'b2':return 'Method: copy the federal income tax withheld line from the pay summary.';
+    case 'b12a':return 'Method: copy the employee\'s own 401(k) line. The employer match is not part of it.';
+    case 'b16':return 'Method: in this assignment state wages equal Box 1.';
+    case 'b17':return 'Method: copy the state income tax withheld line from the pay summary.';
+    default:return '';
+  }
+}
+
+function diagnose(f,v,sc,vals){
+  var k=sc.key;
+  switch(f){
+    case 'b1':
+      if(v===sc.gross)return 'That is the full gross pay. Some lines on the pay summary come out before income tax is figured. Which ones?';
+      if(v===sc.gross-sc.k401||v===sc.gross-sc.health)return 'Close. One of the pre-tax lines is still inside this number. Check every line marked pre-tax.';
+      if(v===sc.fed)return 'That is the federal tax line. Box 1 is wages, not tax.';
+      return 'Box 1 starts with the gross pay on the pay summary. Check which lines come out before income tax.';
+    case 'b2':
+      if(sc.taxed&&v===sc.stateTax)return 'That looks like the state figure. Box 2 is the federal line.';
+      return 'Box 2 is one line on the pay summary: federal income tax withheld.';
+    case 'b3':
+      if(v===k.b1&&sc.has401k)return 'This matches Box 1, but Social Security wages are figured differently. Which pre-tax line is Social Security tax still charged on?';
+      if(v===sc.gross&&sc.hasHealth)return 'That is the full gross pay. At least one pre-tax line is not charged Social Security tax. Which one?';
+      return 'Box 3 starts with gross pay. Check which pre-tax lines are exempt from Social Security tax.';
+    case 'b5':
+      if(v===k.b1&&sc.has401k)return 'This matches Box 1, but Medicare wages are figured differently. Which pre-tax line is Medicare tax still charged on?';
+      if(v===sc.gross&&sc.hasHealth)return 'That is the full gross pay. At least one pre-tax line is not charged Medicare tax. Which one?';
+      return 'Box 5 starts with gross pay. Check which pre-tax lines are exempt from Medicare tax.';
+    case 'b4':
+      if(vals.b3!=null&&!isNaN(vals.b3)&&Math.abs(v-roundHalfUp(vals.b3*62,1000))<=1)return 'Your Box 4 matches the Social Security rate applied to YOUR Box 3. The rate step is right. Recheck Box 3.';
+      if(Math.abs(v-roundHalfUp(k.b3*145,10000))<=1)return 'That is the Medicare rate. Box 4 uses the Social Security rate on the reference card.';
+      if(Math.abs(v-roundHalfUp(k.b3*765,10000))<=1)return 'That adds both taxes together. Box 4 is Social Security only.';
+      return 'Box 4 is Box 3 times the Social Security rate on the reference card.';
+    case 'b6':
+      if(vals.b5!=null&&!isNaN(vals.b5)&&Math.abs(v-roundHalfUp(vals.b5*145,10000))<=1)return 'Your Box 6 matches the Medicare rate applied to YOUR Box 5. The rate step is right. Recheck Box 5.';
+      if(Math.abs(v-roundHalfUp(k.b5*62,1000))<=1)return 'That is the Social Security rate. Box 6 uses the Medicare rate on the reference card.';
+      return 'Box 6 is Box 5 times the Medicare rate on the reference card.';
+    case 'b12a':
+      if(k.b12a===null)return 'Look for a 401(k) line on the pay summary. If there is none, what goes in Box 12?';
+      if(sc.hasHealth&&v===sc.health)return 'That is the health premium. Code D is for the employee\'s own 401(k) contributions.';
+      if(v===sc.k401+sc.match)return 'That includes the employer match. Box 12 code D is only what the employee put in.';
+      return 'Box 12a is the employee\'s 401(k) line on the pay summary. The employer match is not included.';
+    case 'b16':
+      if(v===sc.gross)return 'That is the gross pay. State wages follow Box 1 in this assignment (see the reference card).';
+      return 'State wages follow Box 1 in this assignment (see the reference card).';
+    case 'b17':
+      if(v===sc.fed)return 'That is the federal figure. Box 17 is state income tax withheld.';
+      return 'Box 17 is one line on the pay summary: state income tax withheld.';
+  }
+  return '';
+}
+
+/* ---------- grading ---------- */
+function gradeMoney(f,raw,sc,vals,tol){
+  var key=sc.key[f],v=parseMoney(raw);
+  if(Number.isNaN(v))return res('wrong','Use numbers only, like 12,345.67.');
+  if(key===null){
+    if(v===null)return res('ok','Correct. Nothing to report here, so the box stays blank.');
+    if(v===0)return res('partial','Accepted, but when there is nothing to report the box is left blank, not zero.');
+    return res('wrong',f==='b12a'?diagnose(f,v,sc,vals):'Look at the state income tax line on the pay summary. If this employee had none withheld, what goes in the state boxes?');
+  }
+  if(v===null)return res('wrong','This box still needs an entry.');
+  if(Math.abs(v-key)<=tol)return res('ok','Correct.');
+  return res('wrong',diagnose(f,v,sc,vals));
+}
+function gradeText(f,raw,sc){
+  var key=sc.key[f],val=String(raw||'').trim();
+  var hints={a:'The employee\'s social security number is on the employee card in Part 1.',b:'The EIN is on the employer card in Part 1.',c:'The employer\'s name is on the employer card in Part 1.',e1:'The employee\'s name is on the employee card in Part 1.',e2:'The employee\'s name is on the employee card in Part 1.',
+    b12c:'Box 12 uses a letter code. The reference card lists the codes. Which one is for the employee\'s own 401(k)?',b15:'Box 15 takes the two-letter state from the employer card.'};
+  if(key===''){
+    if(val==='')return res('ok','Correct. There is no 401(k), so Box 12 stays blank.');
+    return res('wrong',f==='b15'?'Look at the state income tax line on the pay summary. If nothing was withheld, what goes in Box 15?':'Look for a 401(k) line on the pay summary. If there is none, Box 12 stays blank.');
+  }
+  if(val==='')return res('wrong','This box still needs an entry.');
+  var good=(f==='a'||f==='b')?digits(val)===key:norm(val)===norm(key);
+  return good?res('ok','Correct.'):res('wrong',hints[f]);
+}
+function gradeCheck(sc,state){
+  var want={statutory:false,retirement:sc.key.retirement,sick:false};
+  var bad=[];['statutory','retirement','sick'].forEach(function(n){if(!!state[n]!==want[n])bad.push(n);});
+  if(!bad.length)return res('ok','Correct.');
+  if(bad.indexOf('retirement')>=0)return res('wrong',sc.key.retirement?'Look at the pay summary. Did this employee put money into a retirement plan?':'Check the pay summary for a 401(k) line. If there is none, should Retirement plan be checked?');
+  return res('wrong','Only the boxes that apply to this employee should be checked. Nothing on the pay summary says statutory employee or third-party sick pay.');
+}
+
+/* ---------- questions ---------- */
+function buildQuestions(sc){
+  var qs=[];
+  if(sc.has401k){
+    qs.push({id:'q1',type:'mc',text:'Which line on the pay summary lowers Box 1 but does NOT lower Box 3 or Box 5?',
+      opts:['401(k) employee contribution','Health insurance premium','Federal income tax withheld','Employer 401(k) match'].filter(function(o){return sc.hasHealth||o!=='Health insurance premium';}),
+      key:'401(k) employee contribution',help:'Compare your Box 1 with your Box 3. Which pre-tax line made them different?'});
+  } else {
+    qs.push({id:'q1',type:'mc',text:'Which line on the pay summary lowers Box 1, Box 3 and Box 5?',
+      opts:['Health insurance premium','Federal income tax withheld','State income tax withheld','Nothing. All three boxes equal gross pay.'],
+      key:'Health insurance premium',help:'Compare your Boxes 1, 3 and 5 with the gross pay line.'});
+  }
+  if(sc.taxed){
+    qs.push({id:'q2',type:'mc',text:'Box 15 shows '+sc.key.b15+'. What does Box 17 tell you?',
+      opts:['How much state income tax was withheld from the employee\'s pay','How much state income tax the employer owes','The employee\'s total state wages','The state sales tax rate'],
+      key:'How much state income tax was withheld from the employee\'s pay',help:'Read the caption under Box 17 on the form.'});
+  } else {
+    qs.push({id:'q2',type:'mc',text:'Boxes 15, 16 and 17 are blank on this W-2. Why?',
+      opts:['The state this employee works in withheld no income tax','The employer forgot to report them','They are only filled in when the employee earns over $50,000','They are filled in by the employee, not the employer'],
+      key:'The state this employee works in withheld no income tax',help:'Look at the state income tax line on the pay summary.'});
+  }
+  qs.push({id:'q3',type:'money',text:'What is the total of Social Security tax and Medicare tax withheld from this employee for the year? (Box 4 plus Box 6)',
+    key:sc.key.b4+sc.key.b6,help:'Add the two tax boxes. If your total is off, recheck Box 4 and Box 6 first.'});
+  if(sc.has401k){
+    qs.push({id:'q4',type:'mc',text:'The pay summary shows an employer 401(k) match. Where does it appear on this W-2?',
+      opts:['Box 1','Box 12, code D','Box 3','Nowhere on this W-2. It is not wages paid to the employee.'],
+      key:'Nowhere on this W-2. It is not wages paid to the employee.',help:'Read the note under the match line on the pay summary. Is it paid to the employee?'});
+  } else {
+    qs.push({id:'q4',type:'mc',text:'Which box shows the federal income tax withheld?',opts:['Box 1','Box 2','Box 4','Box 17'],key:'Box 2',help:'Read the caption under each box on the form.'});
+  }
+  return qs;
+}
+
+/* ---------- page wiring ---------- */
+var sc=null, attempts={};
+function $(s,ctx){return (ctx||document).querySelector(s);}
+function $all(s,ctx){return Array.prototype.slice.call((ctx||document).querySelectorAll(s));}
+
+function render(code){
+  sc=buildScenario(code); attempts={};
+  $('#vcode').textContent=sc.code;
+  var e=sc.emp,b=sc.employer;
+  $('#empcard').innerHTML='<h3>Employee</h3><p class="big">'+e.first+' '+e.last+'</p><div>'+e.role.charAt(0).toUpperCase()+e.role.slice(1)+'</div>'+
+    '<dl><dt>SSN</dt><dd>'+e.ssn+'</dd><dt>Address</dt><dd>'+e.street+', '+e.city+', '+e.state+' '+e.zip+'</dd></dl>';
+  $('#bizcard').innerHTML='<h3>Employer</h3><p class="big">'+b.name+'</p><div>Pays <b>'+sc.per.label+'</b> ('+sc.per.n+' paychecks in the year)</div>'+
+    '<dl><dt>EIN</dt><dd>'+b.ein+'</dd><dt>Address</dt><dd>'+b.street+', '+b.city+', '+b.state+' '+b.zip+'</dd></dl>';
+  var rows=[['Gross pay for the year','before anything is taken out',money(sc.gross)]];
+  if(sc.has401k)rows.push(['401(k) employee contribution','pre-tax, '+sc.pct+'% of gross pay',money(sc.k401)]);
+  if(sc.hasHealth)rows.push(['Health insurance premium','pre-tax, taken out through the employer\'s cafeteria plan',money(sc.health)]);
+  rows.push(['Federal income tax withheld','',money(sc.fed)]);
+  rows.push(['State income tax withheld',sc.taxed?'':'this state withholds no income tax',money(sc.stateTax)]);
+  if(sc.has401k)rows.push(['Employer 401(k) match','paid by the employer, not to the employee',money(sc.match)]);
+  $('#stub').innerHTML='<caption>Year-end earnings statement &middot; tax year 2026</caption>'+rows.map(function(r){return '<tr><th scope="row">'+r[0]+(r[1]?'<span class="note">'+r[1]+'</span>':'')+'</th><td class="amt">'+r[2]+'</td></tr>';}).join('');
+  $('#c-addr').textContent=b.street+'\n'+b.city+', '+b.state+' '+b.zip;
+  $('#f-addr').textContent=e.street+'\n'+e.city+', '+e.state+' '+e.zip;
+  clearForm();
+  renderQuestions();
+  renderTeacher();
+  try{var u=new URL(location.href);u.searchParams.set('v',sc.code);history.replaceState(null,'',u.toString());}catch(err){}
+}
+
+function clearForm(){
+  $all('#w2form [data-input]').forEach(function(i){i.value='';});
+  $all('#w2form [data-check]').forEach(function(i){i.checked=false;});
+  $all('#w2form [data-f]').forEach(function(bx){bx.classList.remove('st-ok','st-wrong','st-partial');var fb=$('.fb',bx);if(fb){fb.className='fb';fb.textContent='';}});
+  $('#formsummary').textContent='';$('#formsummary').className='summary';
+  attempts={};
+}
+function setFb(f,r){
+  var bx=$('[data-f="'+f+'"]');if(!bx)return;
+  bx.classList.remove('st-ok','st-wrong','st-partial');bx.classList.add('st-'+r.s);
+  var fb=$('.fb',bx);fb.className='fb show '+r.s;
+  var label={ok:'Correct. ',partial:'Almost. ',wrong:'Check this box. '}[r.s]||'';
+  var msg=r.m; if(r.s==='ok'&&/^Correct\./.test(msg))label='';
+  fb.textContent=label+msg;
+  if(r.s==='wrong'&&(attempts[f]||0)>=2){var m=methodFor(f,sc);if(m){var sp=document.createElement('span');sp.className='method';sp.textContent=m;fb.appendChild(sp);}}
+}
+function readVals(){
+  var v={};MONEY_FIELDS.forEach(function(f){v[f]=parseMoney($('[data-input="'+f+'"]').value);});return v;
+}
+function checkForm(){
+  var missing=[];
+  REQUIRED_ORDER.forEach(function(f){
+    var blankOk=(f==='b12c'||f==='b12a')?!sc.has401k:(f==='b15'||f==='b16'||f==='b17')?!sc.taxed:false;
+    var val=$('[data-input="'+f+'"]').value.trim();
+    if(!blankOk&&val==='')missing.push(FIELD_LABEL[f]);
+  });
+  var out=$('#formsummary');
+  if(missing.length){out.className='summary bad';out.textContent='Not graded yet. These boxes still need an entry: '+missing.join(', ')+'.';return;}
+  var vals=readVals(),ok=0,total=0,r12={};
+  REQUIRED_ORDER.forEach(function(f){
+    var raw=$('[data-input="'+f+'"]').value,r;
+    if(MONEY_FIELDS.indexOf(f)>=0)r=gradeMoney(f,raw,sc,vals,(f==='b4'||f==='b6')?1:0);
+    else r=gradeText(f,raw,sc);
+    total++; if(r.s==='ok'||r.s==='partial')ok++;
+    if(r.s==='wrong')attempts[f]=(attempts[f]||0)+1;
+    if(f==='b12c'||f==='b12a'){ r12[f]=r; return; }   /* Box 12a has two inputs and one message */
+    setFb(f,r);
+  });
+  var wrong12=[];
+  if(r12.b12c.s==='wrong')wrong12.push('Code: '+r12.b12c.m);
+  if(r12.b12a.s==='wrong')wrong12.push('Amount: '+r12.b12a.m);
+  if(wrong12.length){attempts.b12a=(attempts.b12a||0)+1;setFb('b12a',res('wrong',wrong12.join(' ')));}
+  else setFb('b12a',r12.b12a.s==='partial'?r12.b12a:res('ok',sc.has401k?'Correct.':'Correct. There is no 401(k), so Box 12 stays blank.'));
+  var r13=gradeCheck(sc,{statutory:$('[data-check="statutory"]').checked,retirement:$('[data-check="retirement"]').checked,sick:$('[data-check="sick"]').checked});
+  total++; if(r13.s==='ok')ok++; else attempts.b13=(attempts.b13||0)+1; setFb('b13',r13);
+  out.className='summary '+(ok===total?'good':'bad');
+  out.textContent=ok===total?'All '+total+' entries are correct. Move on to Part 3.':ok+' of '+total+' entries are correct. Each note under a red box says where to look.';
+}
+
+function renderQuestions(){
+  var qs=buildQuestions(sc);sc.questions=qs;
+  $('#questions').innerHTML=qs.map(function(q,i){
+    var body=q.type==='mc'?q.opts.map(function(o,j){return '<label class="opt"><input type="radio" name="'+q.id+'" value="'+j+'"><span>'+o+'</span></label>';}).join(''):
+      '<div class="dollar"><i style="font-family:var(--mono);font-size:20px">$</i><input type="text" inputmode="decimal" id="'+q.id+'-in" aria-label="Answer"></div>';
+    return '<div class="q" id="'+q.id+'"><p><span class="num">'+(i+1)+'.</span>'+q.text+'</p>'+body+'<div class="fb" role="status"></div></div>';
+  }).join('');
+  $('#qsummary').textContent='';$('#qsummary').className='summary';
+}
+function checkQuestions(){
+  var qs=sc.questions,missing=[],ok=0;
+  qs.forEach(function(q,i){
+    var has=q.type==='mc'?!!$('input[name="'+q.id+'"]:checked'):$('#'+q.id+'-in').value.trim()!=='';
+    if(!has)missing.push('question '+(i+1));
+  });
+  var out=$('#qsummary');
+  if(missing.length){out.className='summary bad';out.textContent='Not graded yet. Please answer '+missing.join(', ')+'.';return;}
+  qs.forEach(function(q){
+    var fb=$('#'+q.id+' .fb'),good=false,msg='';
+    if(q.type==='mc'){var sel=q.opts[parseInt($('input[name="'+q.id+'"]:checked').value,10)];good=(sel===q.key);}
+    else{var v=parseMoney($('#'+q.id+'-in').value);good=(v!==null&&!isNaN(v)&&Math.abs(v-q.key)<=2);}
+    if(good){ok++;fb.className='fb show ok';fb.textContent='Correct.';}
+    else{fb.className='fb show wrong';fb.textContent='Check this one. '+q.help;}
+  });
+  out.className='summary '+(ok===qs.length?'good':'bad');
+  out.textContent=ok===qs.length?'All '+qs.length+' answers are correct.':ok+' of '+qs.length+' answers are correct.';
+}
+
+function renderTeacher(){
+  var k=sc.key,rows=[['Box a',k.a],['Box b',k.b],['Box c',k.c],['Box e',k.e1+' '+k.e2],['Box 1',money(k.b1)],['Box 2',money(k.b2)],['Box 3',money(k.b3)],['Box 4',money(k.b4)],['Box 5',money(k.b5)],['Box 6',money(k.b6)],
+    ['Box 12a',k.b12c?k.b12c+'  '+money(k.b12a):'blank'],['Box 13',k.retirement?'Retirement plan checked':'none checked'],['Box 15',k.b15||'blank'],['Box 16',k.b16===null?'blank':money(k.b16)],['Box 17',k.b17===null?'blank':money(k.b17)]];
+  sc.questions=sc.questions||buildQuestions(sc);
+  sc.questions.forEach(function(q,i){rows.push(['Question '+(i+1),q.type==='mc'?q.key:money(q.key)]);});
+  $('#tkcode').textContent=sc.code;
+  $('#tktable').innerHTML='<tr><th>Item</th><th>Key</th></tr>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('');
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var params=new URLSearchParams(location.search);
+  var code=(params.get('v')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5);
+  if(code.length!==5)code=newCode();
+  if(params.get('teacher')==='1')$('#teacherkey').classList.remove('hide');
+  render(code);
+  $('#newver').addEventListener('click',function(){render(newCode());window.scrollTo(0,0);});
+  $('#checkform').addEventListener('click',checkForm);
+  $('#clearform').addEventListener('click',clearForm);
+  $('#checkq').addEventListener('click',checkQuestions);
+});
+
+window.W2={buildScenario:buildScenario,buildQuestions:buildQuestions,money:money,parseMoney:parseMoney,gradeMoney:gradeMoney,gradeText:gradeText,render:render,FIELD_LABEL:FIELD_LABEL};
+})();
+</script>
+</body>
+</html>
