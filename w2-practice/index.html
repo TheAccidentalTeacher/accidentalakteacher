@@ -313,7 +313,8 @@ function buildScenario(code){
   var stateTax=statePer*100*per.n;
   var first=pick(FIRST), last=pick(LAST);
   var biz=pick(BIZ1)+' '+pick(BIZ2);
-  var ssn='000-'+String(10+Math.floor(r()*90))+'-'+String(1000+Math.floor(r()*9000));
+  /* one blanket practice SSN (Scott, 2026-11-06); area 000 is never issued. The two draws are kept so every other number stays the same. */
+  r(); r(); var ssn='000-12-3456';
   var ein='00-'+String(1000000+Math.floor(r()*9000000));
   var empAddr=(100+Math.floor(r()*880))+' '+pick(STREET);
   var bizAddr=(100+Math.floor(r()*880))+' '+pick(STREET);
